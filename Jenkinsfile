@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_DEFAULT_REGION = "ap-northeast-2"
+        AWS_DEFAULT_REGION = "ap-south-1"
     }
 
     stages {
@@ -19,9 +19,9 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-creds'
                 ]]) {
-                    sh '''
-                        cd terraform
-                        terraform init
+                    bat '''
+                    cd terraform
+                    terraform init
                     '''
                 }
             }
@@ -33,9 +33,9 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-creds'
                 ]]) {
-                    sh '''
-                        cd terraform
-                        terraform plan
+                    bat '''
+                    cd terraform
+                    terraform plan
                     '''
                 }
             }
@@ -47,13 +47,12 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-creds'
                 ]]) {
-                    sh '''
-                        cd terraform
-                        terraform apply -auto-approve
+                    bat '''
+                    cd terraform
+                    terraform apply -auto-approve
                     '''
                 }
             }
         }
     }
 }
-
